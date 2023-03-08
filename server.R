@@ -1,5 +1,6 @@
 library(shinydashboard)
 library(shiny)
+source("Methods/Neuralnet.R")
 
 {
 fichiers = fluidRow(
@@ -26,6 +27,10 @@ algo = fluidRow(
 
   column(3, h5("Le format d'enregistrement"),actionButton("Format_enregistrement", "csv")))
 
+result = fluidRow(
+  uiOutput("result")
+)
+
 
 
 ui <- dashboardPage(
@@ -46,7 +51,7 @@ ui <- dashboardPage(
 
 
 server <- function(input, output) {
-  
+  xl = reactiveVal()
   # File selection event
   observeEvent(
     eventExpr = input$fileInput,
@@ -57,21 +62,24 @@ server <- function(input, output) {
         return(NULL)
       
       # Read the input file
-      xl <- readxl::read_excel(inFile, n_max = 10)
+      xl <- readxl::read_excel(inFile)
+      xl_short = xl[1:5,]
       
       output$previewPanel <- renderUI({
         fluidPage(
           hr(style = "border-top: 1px solid #000000;"),
           br(),
           strong("Extrait du fichier chargé:"),
-          renderTable(xl)
-        )
-      })
-      output$test = renderUI({
-        fluidPage(
-          renderTable(t(xl)))})
+          renderTable(xl_short))})
+      
+      NN = NeuralNet_prediction(xl)
+      output$result = renderUI({
+        fluidPage(hr("resultats de reseau de neurones"),
+                  renderTable(NN))
     }
-  )}
+  )
+
+  })}
 }
 
 if(interactive()){
