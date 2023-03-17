@@ -1,3 +1,4 @@
+
 # Initialise l'environnement
 source("initialize.R")
 
@@ -42,6 +43,7 @@ server <- function(input, output, session) {
   algoBackend(input, output, session)
   resultBackend(input, output, session)
 }
+
 
 
 shinyApp(ui = ui, server = server)

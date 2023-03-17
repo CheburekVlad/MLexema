@@ -1,5 +1,16 @@
 
-fileBackend = function (input, output, session) {
+fileBackend = function(input, output, session) {
+  # Récupère les noms de fichiers des modèles entrainés
+  listeModeles = as.list(list.files("trainedModel"))
+  
+  # Sélection du modèle déjà entrainé présent dans le dossier trainedModel
+  observeEvent(
+    eventExpr = input$load,
+    handlerExpr = {
+      modele <<- readRDS(file.path("trainedModel", input$trainedModel))
+    }
+  )
+  
   # File selection event
   observeEvent(
     eventExpr = input$fileInput,
@@ -33,15 +44,16 @@ fileBackend = function (input, output, session) {
           result = creation_dataset(inFile, input$var_of_interest, input$num_partition)
           output$result = renderPrint(result)
 
-          output$previewData= renderUI(
-            {
-              fluidPage(
-                strong("test variable"),
-                renderTable(testData),
-                renderTable(trainData)
-              )
-            }
-          )
+          #output$previewData= renderUI(
+          #  {
+          #    fluidPage(
+          #      strong("test variable"),
+          #      renderTable(testData),
+          #      renderTable(trainData)
+          #    )
+          #  }
+          #)
+
           updateTabItems(session, "tabs", "algoTab")
 
           #Ce code permet lors du clique sur le bouton d'affichier directement les résultats dans la table résultat

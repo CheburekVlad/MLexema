@@ -27,10 +27,6 @@ verif=function(){
   library(shiny)
   library(readxl)
   library(dplyr)
-
-  model_rf = readRDS(file.path("data", "model_RF.rds"))
-  #model_rf
-  model_SVM = readRDS(file.path("data", "model_SVM.rds"))
-  #model_SVM
 }
+
 verif()

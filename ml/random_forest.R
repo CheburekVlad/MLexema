@@ -1,6 +1,3 @@
-
-
-
 creation_dataset = function(file_name, VoIname ,partition){
   #'
   #' Cette fonction prend en entrée une nom de fichier, la variable d'intéret, le ratio de partition des données
@@ -14,7 +11,6 @@ creation_dataset = function(file_name, VoIname ,partition){
   #' @return un dataset un jeux d'entrainement et un jeu de test
   #'
   #' @export
-
   #Chargement du jeu de données
   dataset <<- read.xlsx(file_name)
 
@@ -67,7 +63,20 @@ RFE_method=function(k,j,b,VoI){
 }
 #print(RFE_method(5,13,5,trainData$transformed_VoI))
 
-train_model = function(methode){
+trainModelSVM = function(){
+  #fonction a revoir
+  #tuneGrid permet  La fonction "tuneGrid" est utilisée pour spécifier une grille de paramètres pour la recherche des meilleurs paramètres de modèle.
+  #Vous pouvez ajuster les valeurs de cette grille pour trouver les meilleurs paramètres pour votre propre ensemble de données.
+  svm_model <- train(x = train[, -1], y = train[, 1], method = "svmRadial", trControl = ctrl,
+                     tuneLength = 10, metric = "Accuracy",
+                     preProcess = c("center", "scale"),
+                     tuneGrid = data.frame(C = 10^seq(-2, 2, by = 0.5),
+                                           gamma = 10^seq(-2, 2, by = 0.5)))
+}
+
+
+
+trainModelRF = function(response_var,var_imp,methode){
   #'
   #' Cette fonction prend en entrée la methode de création du modèle et entraine le modèle selon cette
   #' méthode. En sortie on a le modèle entrainer.
@@ -75,11 +84,20 @@ train_model = function(methode){
   #' @param methode chaine de caractère
   #' @return modèle entrainé
   #' @export
-  ctrl <<- trainControl(method="cv", number=5)
 
-  model_rf <<- train(Diagnosis ~ GPR183*PLEK*IGFL3, data=trainData, method=methode, trControl=ctrl)
+  print(var_imp)
+
+  ctrl <- trainControl(method="cv", number=5)
+
+  formula <- as.formula(paste(response_var,"~",var_imp))
+  print(formula)
+
+  model_rf <<- train(formula, data=trainData, method=methode, trControl=ctrl)
   #fitted = predict(model_rf, trainData)
+  print("ok")
 }
+#trainModelRF( c("GPR183","PLEK","IGFL3"),"rf" )
+
 
 Metric = function(model){
   #'
@@ -91,10 +109,15 @@ Metric = function(model){
   #' @return varimp-rf
   #' @export
   plot(model_rf, main="Model Accuracies with randomforest")
+
   varimp_rf <<- varImp(model_rf)
+
   plot(varimp_rf, main="Variable Importance with rf")
+
   varimp_rf
 }
+#Metric(model_rf)
+
 
 predicted_result=function(model,data){
   #'
@@ -104,8 +127,7 @@ predicted_result=function(model,data){
   #' @param data jeux de donné à tester
   #' @return predicted
   #' @export
-predicted <<- predict(model, data)
-predicted
+predicted <<- predict(model_rf, testData)
 }
 
 Matrixconf=function(ref,datas){
@@ -120,7 +142,7 @@ Roc_curve = function(predicted, VarImp){
   #' @return ROC curve
   #' @export
 
-pred2 = prediction(predicted, VarImp)
+pred2 = prediction(predicted, testData$Diagnosis)
 plot(performance(pred2,"tpr", "fpr"))
 
 }
