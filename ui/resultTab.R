@@ -11,7 +11,11 @@
   br(),br(),
   actionButton("predict","Prédiction"),
   br(),br(),
-  uiOutput("predict"),
+  tableOutput("predictTable"),
+  
+  tags$details(
+    textInput("test", "futur")
+  ),
 
   actionButton("confMatrice","Matrice de confusion"),
   uiOutput("confMatrice"),

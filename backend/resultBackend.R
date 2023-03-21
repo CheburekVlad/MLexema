@@ -6,7 +6,10 @@ resultBackend = function (input, output, session) {
     handlerExpr = {
 
       pred <<- predict(model_rf,testData)
-      output$predict <- renderPrint(pred)
+      outputTable = data.frame(testData$Patients, pred)
+      colnames(outputTable) = c("Patients", "Diagnosis")
+      
+      output$predictTable <- renderTable(outputTable)
 
       observeEvent(
         eventExpr = input$confMatrice,

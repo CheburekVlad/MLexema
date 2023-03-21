@@ -32,7 +32,8 @@
 
   actionButton("verification", "Analyse"),
   br(),br(),br(),
-  uiOutput("RFE_result"),
+  strong("Variables d'intérêt identifiées : "),
+  textOutput("mlVoiResult"),
 
   strong("2) Entraînement des modèles"),
 

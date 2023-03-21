@@ -76,8 +76,8 @@ RFE_method=function(k,j,b,VoI){
   formulRfe <<- paste(varRfe, collapse = "*")
 
   print(formulRfe)
-
-
+  
+  return(formulRfe)
   #recuper les noms des variables de lmprofile et l'insérer lors de la création du model ?
 }
 #print(RFE_method(5,13,5,trainData$transformed_VoI))
