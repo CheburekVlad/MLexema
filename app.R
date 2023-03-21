@@ -1,8 +1,9 @@
 
+
 # Initialise l'environnement
 source("initialize.R")
 
-# ---------------------------- Interface ---------------------------- 
+# ---------------------------- Interface ----------------------------
 
 # Onglets
 source(file.path('ui', 'fileTab.R'))
@@ -11,7 +12,7 @@ source(file.path('ui', 'resultTab.R'))
 
 ui <- dashboardPage(
   dashboardHeader(title = "Molecular diagnosis"),
-  
+
   dashboardSidebar(
     sidebarMenu(
       id = "tabs",
@@ -20,7 +21,7 @@ ui <- dashboardPage(
       menuItem("Résultats",  tabName = 'resultTab')
     )
   ),
-  
+
   dashboardBody(
     tabItems(
       tabItem(tabName = "fileTab",   fileLayout),
@@ -31,7 +32,7 @@ ui <- dashboardPage(
 )
 
 
-# ---------------------------- Serveur ---------------------------- 
+# ---------------------------- Serveur ----------------------------
 
 # Backend
 source(file.path('backend', 'fileBackend.R'))

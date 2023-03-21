@@ -1,5 +1,6 @@
 # Pré-charge les fonctions d'analyse random forest
 source(file.path('ml', 'random_forest.R'))
+listeModeles = as.list(list.files("trainedModel"))
 
 verif=function(){
 

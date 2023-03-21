@@ -36,7 +36,6 @@
 
   strong("2) Entraînement des modèles"),
 
-  textInput("varestimate", label = h3("Text input"), value = "var1*var2.."),
   textInput("typeOfMl", label = h3("Text input"), value = "rf"),
 
   column(1,actionButton("train", "Entraînement")),

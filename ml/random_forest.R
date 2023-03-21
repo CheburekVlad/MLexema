@@ -12,6 +12,7 @@ creation_dataset = function(file_name, VoIname ,partition){
   #'
   #' @export
   #Chargement du jeu de données
+  #set.seed(100)
   dataset <<- read.xlsx(file_name)
 
   VoIcol = dataset[VoIname]
@@ -21,9 +22,17 @@ creation_dataset = function(file_name, VoIname ,partition){
   dataset$transformed_VoI = sapply(VoIcol, function(x) ifelse(x == VoI[1], 1, 0))
 
     #Creation du jeux d'entrainement et du jeu de test
-  trainRowNumber <-createDataPartition(y = dataset$transformed_VoI, p=partition, list=FALSE)
+  trainRowNumber <- createDataPartition(y = dataset$transformed_VoI, p=partition, list=FALSE)
   trainData <<- dataset[trainRowNumber,]
   testData <<- dataset[-trainRowNumber,]
+
+  #preProcValues <- preProcess(trainData[,2:13], method = c("center", "scale"))
+  #preProcValues
+  #train
+
+  #train[,2:13] <- predict(preProcValues, train[,2:13])
+  #test[,2:13] <- predict(preProcValues, test[,2:13])
+  #train
 
   #x <<- trainData[, 2:13]
   #y <<- trainData$Diagnosis
@@ -55,9 +64,19 @@ RFE_method=function(k,j,b,VoI){
 
   #La fonction RFE évalue les variables en les ajoutant et en les supprimant du modèle à
   #plusieurs reprises jusqu'à ce qu'une sélection optimale soit trouvée.
+
   lmProfile <<- rfe(x=trainData[,c(2:j)], y=VoI,
                    sizes = c(1:b),
                    rfeControl = ctrl)
+
+  rfeList <<- as.list(lmProfile$optVariables)
+
+  varRfe <<- unlist(unname(rfeList))
+  print(varRfe)
+  formulRfe <<- paste(varRfe, collapse = "*")
+
+  print(formulRfe)
+
 
   #recuper les noms des variables de lmprofile et l'insérer lors de la création du model ?
 }
@@ -85,11 +104,9 @@ trainModelRF = function(response_var,var_imp,methode){
   #' @return modèle entrainé
   #' @export
 
-  print(var_imp)
+  ctrl <- trainControl(method = "cv", number=5)
 
-  ctrl <- trainControl(method="cv", number=5)
-
-  formula <- as.formula(paste(response_var,"~",var_imp))
+  formula <- as.formula(paste(response_var,"~",formulRfe))
   print(formula)
 
   model_rf <<- train(formula, data=trainData, method=methode, trControl=ctrl)
@@ -127,7 +144,9 @@ predicted_result=function(model,data){
   #' @param data jeux de donné à tester
   #' @return predicted
   #' @export
+  #'
 predicted <<- predict(model_rf, testData)
+
 }
 
 Matrixconf=function(ref,datas){
@@ -142,7 +161,7 @@ Roc_curve = function(predicted, VarImp){
   #' @return ROC curve
   #' @export
 
-pred2 = prediction(predicted, testData$Diagnosis)
+pred2 = prediction(predicted, testData$transformed_VoI)
 plot(performance(pred2,"tpr", "fpr"))
 
 }
