@@ -7,7 +7,7 @@ resultBackend = function (input, output, session) {
       pred <<- predict(newModel,testData)
       outputTable = data.frame(testData$Patients, pred)
       colnames(outputTable) = c("Patients", "Diagnosis")
-      
+
       output$predictTable <- renderTable(outputTable)
 
       observeEvent(
@@ -24,6 +24,14 @@ resultBackend = function (input, output, session) {
               predROC <- prediction(as.numeric(pred), testData$Diagnosis)
               perf <- performance(predROC,"tpr", "fpr")
               output$RocCurve = renderPlot(plot(perf))
+
+              observeEvent(
+                eventExpr = input$save,
+                handlerExpr = {
+
+                  saveRDS(newModel,file.path('trainedModel',input$name))
+
+                })
 
               }
             )

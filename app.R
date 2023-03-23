@@ -7,6 +7,7 @@ source("initialize.R")
 source(file.path('ui', 'fileTab.R'))
 source(file.path('ui', 'algoTab.R'))
 source(file.path('ui', 'resultTab.R'))
+source(file.path('ui', 'predictionTab.R'))
 
 ui <- dashboardPage(
   dashboardHeader(title = "Molecular diagnosis"),
@@ -16,7 +17,8 @@ ui <- dashboardPage(
       id = "tabs",
       menuItem("Fichiers",   tabName = "fileTab"),
       menuItem("Algorithme", tabName = "algoTab"),
-      menuItem("Résultats",  tabName = 'resultTab')
+      menuItem("Résultats",  tabName = 'resultTab'),
+      menuItem("Prédiction", tabName = 'predictionTab')
     )
   ),
 
@@ -24,7 +26,8 @@ ui <- dashboardPage(
     tabItems(
       tabItem(tabName = "fileTab",   fileLayout),
       tabItem(tabName = "algoTab",   algoLayout),
-      tabItem(tabName = "resultTab", resultsLayout)
+      tabItem(tabName = "resultTab", resultsLayout),
+      tabItem(tabName = "predictionTab", predictionLayout)
     )
   )
 )
@@ -36,11 +39,13 @@ ui <- dashboardPage(
 source(file.path('backend', 'fileBackend.R'))
 source(file.path('backend', 'algoBackend.R'))
 source(file.path('backend', 'resultBackend.R'))
+source(file.path('backend', 'predictionBackend.R'))
 
 server <- function(input, output, session) {
   fileBackend(input, output, session)
   algoBackend(input, output, session)
   resultBackend(input, output, session)
+  predictionBackend(input, output, session)
 }
 
 

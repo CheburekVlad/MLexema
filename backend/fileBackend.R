@@ -1,15 +1,16 @@
 fileBackend = function(input, output, session) {
   # Récupère les noms de fichiers des modèles entrainés
   listModels = as.list(list.files("trainedModel"))
-  
+
   # Sélection du modèle déjà entrainé présent dans le dossier trainedModel
   observeEvent(
     eventExpr = input$load,
     handlerExpr = {
       model <<- readRDS(file.path("trainedModel", input$trainedModel))
+      updateTabItems(session, "tabs", "predictionTab")
     }
   )
-  
+
   # Evènement sélectionnant le fichier d'entrée
   observeEvent(
     eventExpr = input$fileInput,

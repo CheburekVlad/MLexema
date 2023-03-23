@@ -11,7 +11,7 @@
   actionButton("predict","Prédiction"),
   br(),br(),
   tableOutput("predictTable"),
-  
+
   tags$details(
     textInput("test", "futur")
   ),
@@ -20,6 +20,9 @@
   uiOutput("confMatrix"),
 
   actionButton("ROC","courbe ROC"),
-  plotOutput('RocCurve')
+  plotOutput('RocCurve'),
+
+  textInput("name","Nom du fichier"),
+  actionButton("save","Sauvegarde du modèle")
 
 )}
