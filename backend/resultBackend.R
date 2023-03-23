@@ -1,39 +1,34 @@
-
 resultBackend = function (input, output, session) {
 
   observeEvent(
     eventExpr = input$predict,
     handlerExpr = {
 
-      pred <<- predict(model_rf,testData)
+      pred <<- predict(newModel,testData)
       outputTable = data.frame(testData$Patients, pred)
       colnames(outputTable) = c("Patients", "Diagnosis")
       
       output$predictTable <- renderTable(outputTable)
 
       observeEvent(
-        eventExpr = input$confMatrice,
+        eventExpr = input$confMatrix,
         handlerExpr = {
 
-          matrix = confusionMatrix(reference = as.factor(testData$Diagnosis), data = as.factor(pred),mode = 'everything')
-          output$confMatrice = renderPrint(matrix)
+          newMatrix = confusionMatrix(reference = as.factor(testData$Diagnosis), data = as.factor(pred),mode = 'everything')
+          output$confMatrix = renderPrint(newMatrix)
 
           observeEvent(
             eventExpr = input$ROC,
             handlerExpr = {
 
-              pred_rocr <- prediction(as.numeric(pred), testData$Diagnosis)
-              perf <- performance(pred_rocr,"tpr", "fpr")
+              predROC <- prediction(as.numeric(pred), testData$Diagnosis)
+              perf <- performance(predROC,"tpr", "fpr")
               output$RocCurve = renderPlot(plot(perf))
 
-            }
-          )
-
+              }
+            )
         }
       )
-      }
+    }
   )
-
-
-
 }

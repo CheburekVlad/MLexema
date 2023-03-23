@@ -1,5 +1,3 @@
-
-
 # Initialise l'environnement
 source("initialize.R")
 

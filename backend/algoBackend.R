@@ -1,4 +1,3 @@
-
 algoBackend = function (input, output, session) {
 
   observeEvent(
@@ -6,25 +5,23 @@ algoBackend = function (input, output, session) {
     handlerExpr = {
       withProgress(
           message = "Recherche des varables d'intérêt...", value = 1, {
-          mlVoiResult = RFE_method(input$repetition_k,input$Column_j,input$VoI_b,trainData$transformed_VoI)
+          mlVoiResult = RfeMethod(input$repetitionK, input$columnJ, input$Voib,trainData$transformedVoi)
           output$mlVoiResult = renderText(mlVoiResult)
           
           observeEvent(
             eventExpr = input$train,
             handlerExpr = {
-              train = trainModelRF(input$var_of_interest,c(input$varestimate),input$typeOfMl) #input$var_of_interest,
+              model = trainModel(input$varOfInterest,input$typeOfMl)
               
               
               observeEvent(
                 eventExpr = input$metric,
                 handlerExpr = {
-                  
-                  output$ml_plot <- renderPlot( plot(model_rf, main="Model Accuracies with randomforest") )
-                  varimp_rf <<- varImp(model_rf)
-                  output$ml2_plot <- renderPlot(plot(varimp_rf, main="Variable Importance with rf"))
+
+                  output$mlPlot <- renderPlot(plot(newModel, main=paste("Model Accuracies with", input$typeOfMl)))
+                  newVarImp <<- varImp(newModel)
+                  output$ml2Plot <- renderPlot(plot(newVarImp, main=paste("Variable Importance with", input$typeOfMl)))
                   updateTabItems(session, "tabs", "resultTab")
-                  
-                  
                 }
               )
             }

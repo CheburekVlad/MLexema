@@ -1,13 +1,12 @@
-
 { resultsLayout = fluidRow(
-  textOutput("ml_result"),
+  textOutput("mlResult"),
 
-  strong("1) Mesure de la pertinance du modèle"),
-  plotOutput("ml_plot"),
-  plotOutput("ml2_plot"),
+  strong("1) Mesure de la pertinence du modèle"),
+  plotOutput("mlPlot"),
+  plotOutput("ml2Plot"),
   br(),br(),
 
-  strong("2) Prédiction sur le jeu de donné de test"),
+  strong("2) Prédiction sur le jeu de données de test"),
   br(),br(),
   actionButton("predict","Prédiction"),
   br(),br(),
@@ -17,8 +16,8 @@
     textInput("test", "futur")
   ),
 
-  actionButton("confMatrice","Matrice de confusion"),
-  uiOutput("confMatrice"),
+  actionButton("confMatrix","Matrice de confusion"),
+  uiOutput("confMatrix"),
 
   actionButton("ROC","courbe ROC"),
   plotOutput('RocCurve')
