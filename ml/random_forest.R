@@ -16,13 +16,14 @@ creationDataset = function(fileName, VoIname, partition){
   dataset <<- read.xlsx(fileName)
 
   VoIcol = dataset[VoIname]
+  colnames(VoIcol) = "transformedVoi"
   # print(VoIcol)
 
   VoI = unlist(unname(as.vector(unique(VoIcol))))
   # print(VoI)
-
+  
   dataset$transformedVoi = sapply(VoIcol, function(x) ifelse(x == VoI[1], 1, 0))
-
+  # print(head(dataset))
     # Création du jeu d'entrainement et du jeu de test
   trainRowNumber <- createDataPartition(y = dataset$transformedVoi, p = partition, list = FALSE)
   trainData <<- dataset[trainRowNumber,]
@@ -40,7 +41,7 @@ creationDataset = function(fileName, VoIname, partition){
   #y <<- trainData$Diagnosis
 }
 
-#creation_dataset("eczema_data.xlsx", "Diagnosis", 0.7)
+#creationDataset("dataset_RF_sans_barx2.xlsx", "Diagnosis", 0.7)
 
 RfeMethod=function(k,j,b,VoI){
   #'
@@ -55,7 +56,7 @@ RfeMethod=function(k,j,b,VoI){
   #' @param VoI la variable d'intérêt du jeu de données (intégrer la transformation automatique en facteur
   #'  si c'est une chaine de caractère : as.factor())
   #'
-  #' @return 'lmProfile'
+  #' @return 'formulRfe'
   #' @export
 
   # Permet de sélectionner les meilleures variables à inclure dans un modèle statistique
@@ -67,6 +68,7 @@ RfeMethod=function(k,j,b,VoI){
 
   # La fonction rfe évalue les variables en les ajoutant et en les supprimant du modèle à
   # plusieurs reprises jusqu'à ce qu'une sélection optimale soit trouvée.
+  # RFE = recursive feature elimination
 
   lmProfile <<- rfe(x=trainData[,c(2:j)], y=VoI,
                    sizes = b,
@@ -75,7 +77,7 @@ RfeMethod=function(k,j,b,VoI){
   rfeList <<- as.list(lmProfile$optVariables)
 
   varRfe <<- unlist(unname(rfeList))
-  print(varRfe)
+  
   formulRfe <<- paste(varRfe, collapse = "*")
 
   print(formulRfe)
@@ -84,7 +86,7 @@ RfeMethod=function(k,j,b,VoI){
   # Récupère les noms des variables de lmprofile et l'insérer lors de la création du modèle ?
 }
 
-# print(RfeMethod(5,13,5,trainData$transformed_VoI))
+#print(RfeMethod(5,13,5,trainData$transformedVoi))
 
 trainModelSVM = function(){
   # fonction a revoir
