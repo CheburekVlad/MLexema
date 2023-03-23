@@ -18,6 +18,7 @@
 
   actionButton("confMatrix","Matrice de confusion"),
   uiOutput("confMatrix"),
+  verbatimTextOutput("verb"),
 
   actionButton("ROC","courbe ROC"),
   plotOutput('RocCurve'),

@@ -17,10 +17,10 @@ creationDataset = function(fileName, VoIname, partition){
 
   VoIcol = dataset[VoIname]
   # print(VoIcol)
-  
+
   VoI = unlist(unname(as.vector(unique(VoIcol))))
   # print(VoI)
-  
+
   dataset$transformedVoi = sapply(VoIcol, function(x) ifelse(x == VoI[1], 1, 0))
 
     # Création du jeu d'entrainement et du jeu de test
@@ -69,7 +69,7 @@ RfeMethod=function(k,j,b,VoI){
   # plusieurs reprises jusqu'à ce qu'une sélection optimale soit trouvée.
 
   lmProfile <<- rfe(x=trainData[,c(2:j)], y=VoI,
-                   sizes = c(1:b),
+                   sizes = b,
                    rfeControl = ctrl)
 
   rfeList <<- as.list(lmProfile$optVariables)
@@ -79,7 +79,7 @@ RfeMethod=function(k,j,b,VoI){
   formulRfe <<- paste(varRfe, collapse = "*")
 
   print(formulRfe)
-  
+
   return(formulRfe)
   # Récupère les noms des variables de lmprofile et l'insérer lors de la création du modèle ?
 }

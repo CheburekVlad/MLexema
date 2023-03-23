@@ -15,7 +15,8 @@ resultBackend = function (input, output, session) {
         handlerExpr = {
 
           newMatrix = confusionMatrix(reference = as.factor(testData$Diagnosis), data = as.factor(pred),mode = 'everything')
-          output$confMatrix = renderPrint(newMatrix)
+          #output$confMatrix = renderPrint(newMatrix)
+          output$verb = renderPrint(newMatrix)
 
           observeEvent(
             eventExpr = input$ROC,

@@ -6,14 +6,16 @@
   numericInput("Voib", "Nombre de variables importantes minimum que l'on souhaite en sortie", value = 3, min = 0, max = 10),
 
   actionButton("verification", "Analyse"),
-  br(),br(),br(),
+  verbatimTextOutput("print"),
+  br(),
   strong("Variables d'intérêt identifiées : "),
   textOutput("mlVoiResult"),
-  br(), br(), br(),
-  
+  #verbatimTextOutput("verb"),
+  br(), br(),
+
   strong("2) Entrainement des modèles"),
 
-  textInput("typeOfMl", label = h3("Text input"), value = "rf"),
+  textInput("typeOfMl", label = h3("Choix du type de modèle"), value = "rf"),
 
   column(1,actionButton("train", "Entraînement")),
   column(4,actionButton("metric","Analyse des modèles")),

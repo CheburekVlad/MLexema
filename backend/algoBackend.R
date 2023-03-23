@@ -4,16 +4,17 @@ algoBackend = function (input, output, session) {
     eventExpr = input$verification,
     handlerExpr = {
       withProgress(
-          message = "Recherche des varables d'intérêt...", value = 1, {
+          message = "Recherche des varables d'intérêt", value = 1, {
           mlVoiResult = RfeMethod(input$repetitionK, input$columnJ, input$Voib,trainData$transformedVoi)
           output$mlVoiResult = renderText(mlVoiResult)
-          
+          output$print = renderPrint(lmProfile, width=1000)
+
           observeEvent(
             eventExpr = input$train,
             handlerExpr = {
               model = trainModel(input$varOfInterest,input$typeOfMl)
-              
-              
+
+
               observeEvent(
                 eventExpr = input$metric,
                 handlerExpr = {
