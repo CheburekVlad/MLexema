@@ -12,22 +12,26 @@ algoBackend = function (input, output, session) {
           observeEvent(
             eventExpr = input$train,
             handlerExpr = {
-              model = trainModel(input$varOfInterest,input$typeOfMl)
-
-
-              observeEvent(
-                eventExpr = input$metric,
-                handlerExpr = {
-
-                  output$mlPlot <- renderPlot(plot(newModel, main=paste("Model Accuracies with", input$typeOfMl)))
-                  newVarImp <<- varImp(newModel)
-                  output$ml2Plot <- renderPlot(plot(newVarImp, main=paste("Variable Importance with", input$typeOfMl)))
-                  updateTabItems(session, "tabs", "resultTab")
+              withProgress(
+                message = "Entraînement en cours...", value = 1, {
+                  model = trainModel(input$varOfInterest,input$typeOfMl)
                 }
               )
             }
           )
-        }
+
+
+          observeEvent(
+            eventExpr = input$metric,
+            handlerExpr = {
+              output$mlPlot <- renderPlot(plot(newModel, main=paste("Model Accuracies with", input$typeOfMl)))
+              newVarImp <<- varImp(newModel)
+              output$ml2Plot <- renderPlot(plot(newVarImp, main=paste("Variable Importance with", input$typeOfMl)))
+              updateTabItems(session, "tabs", "resultTab")
+            }
+          )
+}
+
      # )
    # }
   #)

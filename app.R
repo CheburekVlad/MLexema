@@ -15,19 +15,25 @@ ui <- dashboardPage(
   dashboardSidebar(
     sidebarMenu(
       id = "tabs",
-      menuItem("Fichiers",   tabName = "fileTab"),
-      menuItem("Algorithme", tabName = "algoTab"),
-      menuItem("Résultats",  tabName = 'resultTab'),
-      menuItem("Prédiction", tabName = 'predictionTab')
+      menuItem("Fichiers",  icon = icon("folder"), tabName = "fileTab"),
+      
+      menuItem("Entraînement", icon = icon("gear"), startExpanded = TRUE,
+        menuSubItem("Algorithme", tabName = "algoTab"),
+        menuSubItem("Résultats",  tabName = 'resultTab')
+      ),
+      menuItem("Prédiction", icon = icon("check"), tabName = 'predictionTab')
     )
   ),
 
   dashboardBody(
-    tabItems(
-      tabItem(tabName = "fileTab",   fileLayout),
-      tabItem(tabName = "algoTab",   algoLayout),
-      tabItem(tabName = "resultTab", resultsLayout),
-      tabItem(tabName = "predictionTab", predictionLayout)
+    fluidRow(
+      style='padding:2em;',
+      tabItems(
+        tabItem(tabName = "fileTab",   fileLayout),
+        tabItem(tabName = "algoTab",   algoLayout),
+        tabItem(tabName = "resultTab", resultsLayout),
+        tabItem(tabName = "predictionTab", predictionLayout)
+      )
     )
   )
 )

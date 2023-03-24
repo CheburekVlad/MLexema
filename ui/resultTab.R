@@ -12,10 +12,6 @@
   br(),br(),
   tableOutput("predictTable"),
 
-  tags$details(
-    textInput("test", "futur")
-  ),
-
   actionButton("confMatrix","Matrice de confusion"),
   uiOutput("confMatrix"),
   verbatimTextOutput("verb"),

@@ -14,10 +14,15 @@
  # br(), br(),
 
   strong("1) Entrainement des modèles"),
+  
+  selectInput("typeOfMl", h3("Choix du type de modèle"),
+              c("Random forest" = "rf",
+                "Support vector machine" = "svm",
+                "K-means" = "kmeans",
+                "Neural Network" = "neuralnet"
+                )),
 
-  textInput("typeOfMl", label = h3("Choix du type de modèle"), value = "rf"),
-
-  column(1,actionButton("train", "Entraînement")),
-  column(4,actionButton("metric","Analyse des modèles")),
+   actionButton("train", "Entraînement"),
+   actionButton("metric","Analyse des modèles"),
   )
 }

@@ -88,6 +88,21 @@ RfeMethod=function(k,j,b,VoI){
 
 #print(RfeMethod(5,13,5,trainData$transformedVoi))
 
+<<<<<<< Updated upstream
+trainModelSVM = function(){
+  # fonction a revoir
+  # La fonction "tuneGrid" est utilisée pour spécifier une grille de paramètres pour la recherche des meilleurs paramètres de modèle.
+  # Vous pouvez ajuster les valeurs de cette grille pour trouver les meilleurs paramètres pour votre propre ensemble de données.
+  svmModel <- train(x = train[, -1], y = train[, 1], method = "svmRadial", trControl = ctrl,
+                     tuneLength = 10, metric = "Accuracy",
+                     preProcess = c("center", "scale"),
+                     tuneGrid = data.frame(C = 10^seq(-2, 2, by = 0.5),
+                                           gamma = 10^seq(-2, 2, by = 0.5)
+
+                      )
+                    )
+}
+=======
 
 
 
@@ -125,11 +140,15 @@ RfeMethod=function(k,j,b,VoI){
 # train(Diagnosis~GPR183*IGFL3, data=trainData, method="svmRadial", trControl=trainControl(method = "cv", classProbs = TRUE, summaryFunction=twoClassSummary),
 #                   tuneLength = 15, metric = "ROC")
 # 
-# train(Diagnosis~GPR183*IGFL3, data=trainData, method="nnet", trControl=trainControl(method = "cv"),tuneGrid=expand.grid(size=c(10), decay=c(0.1)))
-# # 
+# train(Diagnosis~GPR183*IGFL3, data=trainData, method="svmRadial", trControl=trainControl(method = "cv"),
+#       tuneLength = 15, metric = "Accuracy")
+# 
 
 
 
+
+
+>>>>>>> Stashed changes
 
 trainModel = function(responseVar, methode){
   #'
@@ -145,18 +164,8 @@ trainModel = function(responseVar, methode){
   formula <- as.formula(paste(responseVar,"~", paste(colnames(dataset[,2:13]), collapse = "*")))
 
   #print(formula)
-  if(methode == 'rf') {
-    newModel <<- train(formula, data=trainData, method='rf', trControl=ctrl)
-  } else if(methode == 'svm') {
-    newModel <<- train(formula, data=trainData, method='svmRadial', trControl=ctrl, tuneLength = 10, metric = "Accuracy")
-  }
-  else if(methode == 'neuralnet') {
-    newModel <<- train(formula, data=trainData, method='nnet', trControl=ctrl, tuneGrid=expand.grid(size=c(10), decay=c(0.1)))
-  }
-  # else if(methode == 'kmeans') {
-  #   newModel <<- kmeans(trainData[, 2:13], center=3, nstart=25)
-  # }
-  
+
+  newModel <<- train(formula, data=trainData, method=methode, trControl=ctrl ) #trControl=ctrl
   #fitted = predict(model, trainData)
   print("ok")
 }

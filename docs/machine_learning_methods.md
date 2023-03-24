@@ -7,23 +7,15 @@ La complexité de l'algorithme est plus importante que pour l'apprentissage non 
 
 
 <!-- ################################ KMEANS ################################ -->
-# K-means (version non détaillée)
-## Principe
-Le principe de l'algorithme des k-means est de diviser les observations des données en k groupes afin d'obtenir k clusters. Ceux-ci seront homogènes et distincts les uns des autres. Ainsi, les observations ne peuvent appartenir qu'à un seul cluster.  
-Une des difficultés de cet algorithme revient à choisir le nombre de cluster à définir.   
-En effet, un nombre de cluster trop faible regroupera trop de données et compliquera l'interprétation des patterns entre elles.
-En revanche, un nombre de cluster trop grand conduira à une fragmentation des données trop importantes et masquera des patterns intéressants.  
-Il faut donc tester différentes valeurs de k.
- 
- COMPLETER LES DONNEES AJOUTEES AUX CLUSTERS (CONSTRUCTION DONNEES)
-
-# K-means (version détaillée)
+# K-means
 ## Principe 
 Apprentissage non supervisé, son principe repose sur la segmentation des données en k groupes afin d'obtenir k clusters. Ceux-ci seront homogènes et distincts les uns des autres.
 
 Dans le but de définir ces clusters, dans un premier temps on choisi aléatoirement k centroïdes auxquelles on donne un identifiant (0, 1, 2, ...). 
 Ensuite, pour chaque point dans le jeu de données, on assimile le centroïde le plus proche par comparaison entre la distance du point et chacun des k centroïdes.
-L'algorithme alterne plusieurs fois les deux étapes pour optimiser leur position. 
+Les centroïdes sont déplacés au milieu de leur cluster (moyenne des points du cluster).
+L'algorithme alterne plusieurs fois les deux étapes pour optimiser leur position.
+
 
 Une des difficultés de cet algorithme revient à choisir le nombre de cluster à définir. 
 En effet, un nombre de cluster trop faible regroupera trop de données et compliquera l'interprétation des patterns entre elles.
@@ -54,9 +46,9 @@ Choisir aléatoirement K points (centres de cluster).
 
     REPETER
     
-        Affecter chaque point (élément de la matrice de donnée) à son centre le plus proche
+        Affecter chaque point (élément de la matrice de donnée) à son centroïde le plus proche
 
-        Recalculer le centre de chaque cluster et modifier le centroide
+        Recalculer le centre de chaque cluster et modifier les coordonnées du centroide
 
     JUSQU‘A     
         CONVERGENCE
@@ -64,13 +56,9 @@ Choisir aléatoirement K points (centres de cluster).
 FIN ALGORITHME
 ```
 
-## Paramètres
-<!-- voir script Egor (quel package utilisé)
--->
-
 ## Les points forts
 - Identification des groupes de données inconnus à partir des données complexes.
-- L'algorithme s'adapte aux changements des données
+- L'algorithme s'adapte aux changements des données.
 - Compatible aux grands jeux de données
 - Résultats simples à interpréter (description des clusters).
 - Faible coût de calcul (rapide, efficace)
@@ -86,17 +74,8 @@ FIN ALGORITHME
 
 
 <!-- ################################ RANDOM FOREST ################################ -->
-# Random Forest de classification (version non détaillée)
-## Principe
-Algorithme basé sur l'assemblage d'arbres de décision indépendants. 
-Ce sont ces arbres qui, à partir d'une serie de tests, aident à prendre une décision finale (représentée par une feuille de l'arbre).
 
-Pour choisir par quel test commencé, l'algorithme calcule, pour chacun des tests de la série, le gain d'information obtenu. Ainsi, le premier test exécuté sera celui qui maximise le gain.
-
-Le nombre d'arbres est déterminé par validation croisée, c'est-à-dire que l'algorithme utilise des sous-ensembles du jeu de données de départ pour entrainer et tester le modèle.
-
-
-# Random Forest de classification (version détaillée)
+# Random Forest
 ## Principe
 Algorithme basé sur l'assemblage d'arbres de décision indépendants. 
 Ce sont ces arbres qui, à partir d'une serie de tests, aident à prendre une décision finale (représentée par une feuille de l'arbre).
@@ -105,28 +84,23 @@ Pour choisir par quel test commencé, l'algorithme calcul, pour chacun des tests
 
 Le nombre d'arbres est déterminé par validation croisée, c'est-à-dire que l'algorithme utilise des sous-ensembles du jeu de données de départ pour entrainer et tester le modèle.
 En effet, le jeu de données est découpé en plusieurs sous-ensemble d'échantillons tirés aléatoirement.
-Un modèle est ensuite entrainé sur chacun de ces sous-ensemble ; il y a autant de modèles que de sous-ensemble.
+Un modèle est ensuite entrainé sur chacun de ces sous-ensembles ; il y a autant de modèles que de sous-ensembles.
 Les résultats des modèles, c'est-à-dire les arbres, sont combinés dans le but de faire mettre en avant un résultat final robuste.
 
 
 ## Algorithme Random Forest
 ```
 DEBUT
-    Selectionner n sous-ensembles aléatoires de points et m caractéristiques dans l'ensemble du jeu de données 
+    Selectionner n sous-ensembles aléatoires de points et m caractéristiques dans l'ensemble du jeu de données (méthode bagging)
 
     Construiction des arbres de décision individuels pour chaque échantillon
 
-    Recueilir les résultats générés par les arbres
+    Recueilir les résultats générés par les arbres (prédiction de chacun des arbres)
 
-    Vote 
-
-    ......................
-
+    Moyenne les prédictions de chaque arbre = moyenne de la forêt
+     
 FIN    
 ```
-
-## Paramètres
-<!-- voir script -->
 
 ## Les points forts
 - Visualisation de l'importance d'une variable (au niveau des noeuds).
@@ -144,14 +118,7 @@ FIN
 
 
 <!-- ################################ Support Vector Machine (SVM) ################################ -->
-# SVM (version non détaillée)
-## Principe
-Technique d'apprentissage supervisé, le Support Vector Machine (SVM) consiste à déterminer la frontière qui sépare le plus les classes les unes des autres de façon linéaire.
-
-Pour trouver cette frontière, l'algorithme doit s'entrainer sur un ensemble de point dont on connait à quelle classe ils appartiennent. Il détermine la frontière la plus plausible pour ce jeu de données d'entrainement en maximisant la distance entre les points et la frontière. Ainsi, il apprend à prédire l'emplacement des futures données encore inconnues à partir de son entrainement.
-
-
-# SVM (version détaillée)
+# SVM pour la classification
 ## Principe
 Technique d'apprentissage supervisé, le Support Vector Machine (SVM) consiste à déterminer la frontière qui sépare le plus les classes les unes des autres de façon linéaire.
 
@@ -188,35 +155,18 @@ DEBUT
 FIN
 ```
 
-
-## Paramètres
-<!-- voir script -->
-
 ## Les points forts
 - Particulièrement efficace lorsque le nombre de données d'entrainement est faible.
 
 
 ## Les limites
-- Données non séparable linéairement = transformation préalable (kernel trick)
+- Pour des données non séparables linéairement = transformation préalable (kernel trick)
+- Algorithme plus complexe
 
 
 
 <!-- ################################ Neural Network ################################ -->
-# Neural Network (version non détaillée)
-## Principe
-Basé sur une imitation algorithmique des fonctions du cerveau humain, les réseaux de neurones traitent de façon autonome des données complexes.
-L'algorithme est dans un premier temps entrainé puis apprend en autonomie et se met à jour en permanence dans le but d'offrir un résultat le plus précis possible.
-
-Il y a 3 types de neurones principaux : 
-- Les neurones d'entrées, recevant les données
-- Les neurones de traitements
-- Les neurones de sorties
-
-Un réseau de neurones peut être multicouches à chaque niveau (couche d'entrée, couche cachée de traitements, couche de sortie).
-
-Chaque connexion entre neurones a un poids et un biais qui ne sont pas équivalents entre eux.
-
-# Neural Network (version détaillée)
+# Neural Network
 ## Principe
 Basé sur une imitation algorithmique des fonctions du cerveau humain, les réseaux de neurones traitent de façon autonome des données complexes.
 L'algorithme est dans un premier temps entrainé puis apprend en autonomie et se met à jour en permanence dans le but d'offrir un résultat le plus précis possible.
@@ -233,7 +183,7 @@ Si le poids est important, l'information sera dominante à l'entrée du neurone 
 
 Les biais d'une connexion entre neurones est un paramètre permettant d'ajuster les valeurs d'entrées auxquelles les poids ont été appliqués et influe sur la fonction d'activation.
 
-Une fonction d'activation calcul la valeur de sortie de chaque neurone afin de déterminer combien de neurones seront activés pour résoudre le problème.
+La fonction d'activation calcule la valeur de sortie de chaque neurone afin de déterminer combien de neurones seront activés pour résoudre le problème.
 
 Fonctionnement des réseaux neuronaux : 
 $ \sum_{i=1}^{m} w_ix_i + biais $
@@ -261,10 +211,6 @@ DEBUT
 
 FIN
 ```
-
-
-## Paramètres
-<!-- voir script -->
 
 ## Les points forts
 - Peuvent traiter des problèmes non structurés (sans information initiale)
