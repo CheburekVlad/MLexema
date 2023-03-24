@@ -21,7 +21,7 @@ creationDataset = function(fileName, VoIname, partition){
 
   VoI = unlist(unname(as.vector(unique(VoIcol))))
   # print(VoI)
-  
+
   dataset$transformedVoi = sapply(VoIcol, function(x) ifelse(x == VoI[1], 1, 0))
   # print(head(dataset))
     # Création du jeu d'entrainement et du jeu de test
@@ -41,7 +41,7 @@ creationDataset = function(fileName, VoIname, partition){
   #y <<- trainData$Diagnosis
 }
 
-#creationDataset("dataset_RF_sans_barx2.xlsx", "Diagnosis", 0.7)
+#creationDataset("../dataset_RF_sans_barx2.xlsx", "Diagnosis", 0.7)
 
 RfeMethod=function(k,j,b,VoI){
   #'
@@ -77,7 +77,7 @@ RfeMethod=function(k,j,b,VoI){
   rfeList <<- as.list(lmProfile$optVariables)
 
   varRfe <<- unlist(unname(rfeList))
-  
+
   formulRfe <<- paste(varRfe, collapse = "*")
 
   print(formulRfe)
@@ -96,10 +96,11 @@ trainModelSVM = function(){
                      tuneLength = 10, metric = "Accuracy",
                      preProcess = c("center", "scale"),
                      tuneGrid = data.frame(C = 10^seq(-2, 2, by = 0.5),
-                                           gamma = 10^seq(-2, 2, by = 0.5)))
+                                           gamma = 10^seq(-2, 2, by = 0.5)
+
+                      )
+                    )
 }
-
-
 
 trainModel = function(responseVar, methode){
   #'
@@ -110,12 +111,14 @@ trainModel = function(responseVar, methode){
   #' @return modèle entrainé
   #' @export
 
-  ctrl <- trainControl(method = "cv", number=5)
+  ctrl <- trainControl(method = "cv", number=10)
 
-  formula <- as.formula(paste(responseVar,"~",formulRfe))
-  print(formula)
+  formula <- as.formula(paste(responseVar,"~", paste(colnames(dataset[,2:13]), collapse = "*")))
 
-  newModel <<- train(formula, data=trainData, method=methode, trControl=ctrl)
+  #print(formula)
+
+  newModel <<- train(formula, data=trainData, method=methode, trControl=ctrl ) #trControl=ctrl
   #fitted = predict(model, trainData)
   print("ok")
 }
+
