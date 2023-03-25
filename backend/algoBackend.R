@@ -24,9 +24,6 @@ algoBackend = function (input, output, session) {
           observeEvent(
             eventExpr = input$metric,
             handlerExpr = {
-              output$mlPlot <- renderPlot(plot(newModel, main=paste("Model Accuracies with", input$typeOfMl)))
-              newVarImp <<- varImp(newModel)
-              output$ml2Plot <- renderPlot(plot(newVarImp, main=paste("Variable Importance with", input$typeOfMl)))
               updateTabItems(session, "tabs", "resultTab")
             }
           )

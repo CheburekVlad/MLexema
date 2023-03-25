@@ -3,20 +3,20 @@
 
   strong("1) Mesure de la pertinence du modèle"),
   plotOutput("mlPlot"),
-  plotOutput("ml2Plot"),
-  br(),br(),
+  # plotOutput("ml2Plot"),
+  # br(),br(),
 
   strong("2) Prédiction sur le jeu de données de test"),
   br(),br(),
-  actionButton("predict","Prédiction"),
+  strong("Prédiction"),
   br(),br(),
   tableOutput("predictTable"),
 
-  actionButton("confMatrix","Matrice de confusion"),
+  strong("Matrice de confusion"),
   uiOutput("confMatrix"),
   verbatimTextOutput("verb"),
 
-  actionButton("ROC","courbe ROC"),
+  strong("Courbe ROC"),
   plotOutput('RocCurve'),
 
   textInput("name","Nom du fichier"),

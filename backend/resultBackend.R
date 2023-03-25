@@ -1,31 +1,26 @@
 resultBackend = function (input, output, session) {
 
   observeEvent(
-    eventExpr = input$predict,
+    eventExpr = input$metric,
     handlerExpr = {
+      output$mlPlot <- renderPlot(plot(newModel, main=paste("Model Accuracies with", input$typeOfMl)))
+      #newVarImp <<- varImp(newModel)
+      #output$ml2Plot <- renderPlot(plot(newVarImp, main=paste("Variable Importance with", input$typeOfMl)))
 
+      # Prédiction
       pred <<- predict(newModel,testData)
-      outputTable = data.frame(testData$Patients, pred)
-      colnames(outputTable) = c("Patients", "Diagnosis")
+      voiName <- input$varOfInterest
+      outputTable = data.frame(testData$Patients, testData[voiName], pred)
+      colnames(outputTable) = c("Patients", "Diagnosis (input)", "Diagnosis (predicted)")
 
       output$predictTable <- renderTable(outputTable)
-    }
-  )
 
-  observeEvent(
-    eventExpr = input$confMatrix,
-    handlerExpr = {
-
+      # Matrice de confusion
       newMatrix = confusionMatrix(reference = as.factor(testData$Diagnosis), data = as.factor(pred),mode = 'everything')
       #output$confMatrix = renderPrint(newMatrix)
       output$verb = renderPrint(newMatrix)
-    }
-  )
 
-  observeEvent(
-    eventExpr = input$ROC,
-    handlerExpr = {
-
+      # ROC
       predROC <- prediction(as.numeric(pred), testData$Diagnosis)
       perf <- performance(predROC,"tpr", "fpr")
       output$RocCurve = renderPlot(plot(perf))
@@ -38,5 +33,4 @@ resultBackend = function (input, output, session) {
       saveRDS(newModel,file.path('trainedModel',input$name))
     }
   )
-
 }

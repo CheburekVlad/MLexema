@@ -144,14 +144,17 @@ trainModel = function(responseVar, methode){
 
   formula <- as.formula(paste(responseVar,"~", paste(colnames(dataset[,2:13]), collapse = "*")))
 
-  #print(formula)
+  print(formula)
   if(methode == 'rf') {
     newModel <<- train(formula, data=trainData, method='rf', trControl=ctrl)
+    print(newModel)
   } else if(methode == 'svm') {
     newModel <<- train(formula, data=trainData, method='svmRadial', trControl=ctrl, tuneLength = 10, metric = "Accuracy")
+    print(newModel)
   }
   else if(methode == 'neuralnet') {
-    newModel <<- train(formula, data=trainData, method='nnet', trControl=ctrl, tuneGrid=expand.grid(size=c(10), decay=c(0.1)))
+    newModel <<- train(formula, data=trainData, method='nnet', trControl=ctrl#, tuneGrid=expand.grid(size=c(10), decay=c(0.1))
+    )
   }
   # else if(methode == 'kmeans') {
   #   newModel <<- kmeans(trainData[, 2:13], center=3, nstart=25)
@@ -159,5 +162,8 @@ trainModel = function(responseVar, methode){
   
   #fitted = predict(model, trainData)
   print("ok")
+  return(newModel)
 }
+
+#m = trainModel("Diagnosis", "svm")
 
