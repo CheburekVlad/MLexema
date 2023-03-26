@@ -1,4 +1,4 @@
-preproTab <- fluidPage(
+{preproLayout = fluidRow(
   titlePanel("Data Normalization App"),
   
   sidebarLayout(
@@ -33,5 +33,5 @@ preproTab <- fluidPage(
       )
     )
   )
-)
+)}
 
