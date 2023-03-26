@@ -27,25 +27,31 @@
                     #corp du RF
                     
                     actionButton("train", "Entraînement"),
-                    actionButton("metric","Analyse des modèles")
+                    actionButton("metric","Analyse des modèles"),
+                    actionButton("rf.result","Result")
                   ))),
 
     #SVM
     tabPanel("SVM", value = "svm", hidden = T,
              conditionalPanel(condition = "input$type =='svm'",
-                              fluidRow(),
+                              fluidRow(
+                                #corp du SVM a mettre ici, partie UI
+                                actionButton("svm.result","Result")
+                              ),
                               
-                              #corp du SVM a mettre ici, partie UI
              )),
     #Kmeans
     tabPanel("Kmeans", value = "km",hidden = T,
              conditionalPanel(condition = "input$type =='km'",
-                              fluidRow(textOutput("km")),
+                      fluidRow(numericInput("clusters.km","Nombre de clusters:",value = 2,min = 2,step = 1),
+                               numericInput("nstart.km","Nombre d'essais aleatoires:",value = 5, min =3, max = 10,step = 1),
+                               numericInput("iter.km","Nombre d'iterations max:",value = 10, min = 5, step = 5),
+                        actionButton("km.result","Result")),
              )),
     #NeuralNet
     tabPanel("Reseau de neurones", value = "nn", hidden = T,
              conditionalPanel(condition = "input$type =='nn'",
-                              fluidRow()
+                      fluidRow(actionButton("nn.result","Result"))
   )
 
   ))

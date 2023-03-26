@@ -34,6 +34,7 @@ algoBackend = function (input, output, session) {
       } 
       else if (selected_option == "Kmeans") {
         updateTabsetPanel(session, "tabs", selected = "km")
+        
         kmeans_res = kmeans_analysis(input$inFile)
         output$km = renderText(kmeans_res[1])
       }
@@ -42,5 +43,21 @@ algoBackend = function (input, output, session) {
       }
       output$km = renderText(kmeans_res[1])
     }
-  )}
+  )
+  observeEvent(input$rf.result, {
+    updateTabItems(session, "tabs", "resultTab")
+  })
+  
+  observeEvent(input$svm.result, {
+    updateTabItems(session, "tabs", "resultTab")
+  })
+  
+  observeEvent(input$km.result, {
+    updateTabItems(session, "tabs", "resultTab")
+  })
+  
+  observeEvent(input$nn.result, {
+    updateTabItems(session, "tabs", "resultTab")
+  })
+  }
   
