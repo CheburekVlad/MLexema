@@ -1,4 +1,4 @@
-preproBackend <- function(input, output) {
+preproBackend <- function(input, output, session) {
   
   ######################################### Loading and display ###################################################
   
