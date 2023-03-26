@@ -15,7 +15,7 @@ verif=function(){
   myPackages = c("caret", "skimr", "RANN" , "randomForest",
                   "gbm", "xgboost" , "caretEnsemble" ,
                   "C50" , "earth", "openxlsx", "skimr", "ROCR",
-                  "shinydashboard", "shiny","neuralnet","amap")
+                  "shinydashboard", "shiny","neuralnet","amap", "DT", "tidyverse")
 
   installPackage = installed.packages()[,1]
   toInstall = myPackages[!myPackages %in% installPackage]
@@ -32,6 +32,8 @@ verif=function(){
   library(dplyr)
   library(neuralnet)
   library(amap)
+  library(DT)
+  library(tidyverse)
 }
 
 verif()
