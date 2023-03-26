@@ -1,5 +1,6 @@
 # Pré-charge les fonctions d'analyse random forest
 source(file.path('ml', 'random_forest.R'))
+source(file.path('ml','Kmeans.R'))
 listModels = as.list(list.files("trainedModel"))
 
 verif=function(){
@@ -14,7 +15,7 @@ verif=function(){
   myPackages = c("caret", "skimr", "RANN" , "randomForest",
                   "gbm", "xgboost" , "caretEnsemble" ,
                   "C50" , "earth", "openxlsx", "skimr", "ROCR",
-                  "shinydashboard", "shiny")
+                  "shinydashboard", "shiny","neuralnet","amap")
 
   installPackage = installed.packages()[,1]
   toInstall = myPackages[!myPackages %in% installPackage]
@@ -29,6 +30,8 @@ verif=function(){
   library(shiny)
   library(readxl)
   library(dplyr)
+  library(neuralnet)
+  library(amap)
 }
 
 verif()

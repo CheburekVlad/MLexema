@@ -20,21 +20,33 @@
   tabsetPanel(
     #Random forest
     tabPanel("Random Forest", value = "rf",hidden = T,
-             conditionalPanel(condition = "input.type =='rf'",
-                  fluidRow(
+             conditionalPanel(condition = "input$type =='rf'",
+                  fluidRow( 
+                    br(),
+                    br(),
+                    #corp du RF
+                    
                     actionButton("train", "Entraînement"),
                     actionButton("metric","Analyse des modèles")
                   ))),
-    
+
     #SVM
-    tabPanel("SVM", value = "svm", hidden = T),
-    
+    tabPanel("SVM", value = "svm", hidden = T,
+             conditionalPanel(condition = "input$type =='svm'",
+                              fluidRow(),
+                              
+                              #corp du SVM a mettre ici, partie UI
+             )),
     #Kmeans
-    tabPanel("Kmeans", value = "km",hidden = T),
-    
+    tabPanel("Kmeans", value = "km",hidden = T,
+             conditionalPanel(condition = "input$type =='km'",
+                              fluidRow(textOutput("km")),
+             )),
     #NeuralNet
-    tabPanel("Reseau de neurones", value = "nn", hidden = T)
+    tabPanel("Reseau de neurones", value = "nn", hidden = T,
+             conditionalPanel(condition = "input$type =='nn'",
+                              fluidRow()
   )
 
-  )
-}
+  ))
+)}
