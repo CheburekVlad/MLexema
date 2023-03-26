@@ -41,8 +41,8 @@ fileBackend = function(input, output, session) {
       observeEvent(
         eventExpr = input$submit,
         handlerExpr = {
-          result = creationDataset(inFile, input$varOfInterest, input$numPartition)
-          output$result = renderPrint(result)
+          data = readxl::read_xlsx(inFile)
+          output$result = renderPrint(data)
 
           updateTabItems(session, "tabs", "algoTab")
         })

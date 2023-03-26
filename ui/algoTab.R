@@ -13,16 +13,28 @@
   #verbatimTextOutput("verb"),
  # br(), br(),
 
-  strong("1) Entrainement des modèles"),
+  strong("1) Choix du modele"),
   
-  selectInput("typeOfMl", h3("Choix du type de modèle"),
-              c("Random forest" = "rf",
-                "Support vector machine" = "svm",
-                "K-means" = "kmeans",
-                "Neural Network" = "neuralnet"
-                )),
+  br(),
+  
+  tabsetPanel(
+    #Random forest
+    tabPanel("Random Forest", value = "rf",hidden = T,
+             conditionalPanel(condition = "input.type =='rf'",
+                  fluidRow(
+                    actionButton("train", "Entraînement"),
+                    actionButton("metric","Analyse des modèles")
+                  ))),
+    
+    #SVM
+    tabPanel("SVM", value = "svm", hidden = T),
+    
+    #Kmeans
+    tabPanel("Kmeans", value = "km",hidden = T),
+    
+    #NeuralNet
+    tabPanel("Reseau de neurones", value = "nn", hidden = T)
+  )
 
-   actionButton("train", "Entraînement"),
-   actionButton("metric","Analyse des modèles"),
   )
 }
