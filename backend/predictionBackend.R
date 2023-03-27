@@ -26,7 +26,7 @@ predictionBackend = function (input, output, session) {
       observeEvent(
       eventExpr = input$prediction,
       handlerExpr = {
-        prediction = predict(modele,xlPred)
+        prediction = predict(model,xlPred)
         output$prediction1 = renderPrint(prediction)
 
         outputTable = data.frame(xlPred$Patients, prediction)

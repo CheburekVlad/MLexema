@@ -8,6 +8,7 @@ source(file.path('ui', 'fileTab.R'))
 source(file.path('ui', 'algoTab.R'))
 source(file.path('ui', 'resultTab.R'))
 source(file.path('ui', 'predictionTab.R'))
+source(file.path('ui', 'preproTab.R'))
 
 ui <- dashboardPage(
   dashboardHeader(title = "Molecular diagnosis"),
@@ -16,7 +17,7 @@ ui <- dashboardPage(
     sidebarMenu(
       id = "tabs",
       menuItem("Fichiers",  icon = icon("folder"), tabName = "fileTab"),
-      
+
       menuItem("Entraînement", icon = icon("gear"), startExpanded = TRUE,
         menuSubItem("Algorithme", tabName = "algoTab"),
         menuSubItem("Résultats",  tabName = 'resultTab')
@@ -47,6 +48,7 @@ source(file.path('backend', 'fileBackend.R'))
 source(file.path('backend', 'algoBackend.R'))
 source(file.path('backend', 'resultBackend.R'))
 source(file.path('backend', 'predictionBackend.R'))
+source(file.path('backend', 'preproBackend.R'))
 
 server <- function(input, output, session) {
   fileBackend(input, output, session)

@@ -20,7 +20,6 @@ algoBackend = function (input, output, session) {
             }
           )
 
-
           observeEvent(
             eventExpr = input$metric,
             handlerExpr = {
