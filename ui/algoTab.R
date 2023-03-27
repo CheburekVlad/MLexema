@@ -14,13 +14,18 @@
  # br(), br(),
 
   strong("1) Entrainement des modèles"),
-  
+
   selectInput("typeOfMl", h3("Choix du type de modèle"),
               c("Random forest" = "rf",
                 "Support vector machine" = "svm",
                 "K-means" = "kmeans",
                 "Neural Network" = "neuralnet"
                 )),
+  strong("Choisir les parmaètres pour le kmeans"),
+  numericInput("cluster","Nombre de cluster",value=2),
+  numericInput("nstart","Choisir une nstart",value=5),
+  numericInput("maxhit","Choisir un maxhit",value=10),
+
 
    actionButton("train", "Entraînement"),
    actionButton("metric","Analyse des modèles"),

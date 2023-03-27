@@ -111,22 +111,22 @@ RfeMethod=function(k,j,b,VoI){
 # Le paramètre tuneGrid nous permet de décider quelles valeurs prendra pour le paramètre principal
 # Alors que tuneLength ne limite que le nombre de paramètres par défaut à utiliser.
 
-# Accuracy est le pourcentage d'instances correctement classées parmi toutes les instances. 
+# Accuracy est le pourcentage d'instances correctement classées parmi toutes les instances.
 # Il est plus utile sur une classification binaire que sur les problèmes de classification multi-classes,
-# car il peut être moins clair de comprendre comment la précision se répartit entre ces classes 
+# car il peut être moins clair de comprendre comment la précision se répartit entre ces classes
 # (par exemple, vous devez approfondir avec une matrice de confusion).
-# 
-# Le Kappa est comme la classification avec Accuracy, 
-# sauf qu'il est normalisé à la base du hasard aléatoire sur votre ensemble de données. 
-# C'est une mesure plus utile à utiliser sur les problèmes qui présentent un déséquilibre dans les classes 
+#
+# Le Kappa est comme la classification avec Accuracy,
+# sauf qu'il est normalisé à la base du hasard aléatoire sur votre ensemble de données.
+# C'est une mesure plus utile à utiliser sur les problèmes qui présentent un déséquilibre dans les classes
 # (par exemple, une répartition 70-30 pour les classes 0 et 1 et vous pouvez obtenir une précision de 70 % en prédisant que toutes les instances sont pour la classe 0).
-# 
+#
 # trainData$Diagnosis = make.names(c("ACD", "ACD", "no ACD", "no.ACD"), unique = FALSE)
 # train(Diagnosis~GPR183*IGFL3, data=trainData, method="svmRadial", trControl=trainControl(method = "cv", classProbs = TRUE, summaryFunction=twoClassSummary),
 #                   tuneLength = 15, metric = "ROC")
-# 
+#
 # train(Diagnosis~GPR183*IGFL3, data=trainData, method="nnet", trControl=trainControl(method = "cv"),tuneGrid=expand.grid(size=c(10), decay=c(0.1)))
-# # 
+# #
 
 
 
@@ -156,10 +156,8 @@ trainModel = function(responseVar, methode){
     newModel <<- train(formula, data=trainData, method='nnet', trControl=ctrl#, tuneGrid=expand.grid(size=c(10), decay=c(0.1))
     )
   }
-  # else if(methode == 'kmeans') {
-  #   newModel <<- kmeans(trainData[, 2:13], center=3, nstart=25)
-  # }
-  
+
+
   #fitted = predict(model, trainData)
   print("ok")
   return(newModel)
