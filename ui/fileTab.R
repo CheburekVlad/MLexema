@@ -1,4 +1,5 @@
-{ fileLayout = fluidRow(
+fileLayout = fluidRow(
+  
   # Choix du modèle pré-entrainé
   selectInput("trainedModel", "Choisir un modèle pré-entrainé:", choices = listModels),
   actionButton("load", "Chargement modèle"),
@@ -9,11 +10,11 @@
   br(),br(),
   
   # Chargement du fichier
-  fileInput("fileInput", label = "Fichier d'entrée", accept = c(".xlsx")),
+  fileInput("FileInputButton", label = "Fichier d'entrée", accept = c(".xlsx")),
 
   actionButton("submit", "Soumettre"),
 
   uiOutput("previewPanel"),
 
   br(),br(),br()
-)}
+)

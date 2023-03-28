@@ -14,8 +14,8 @@ verif=function(){
   ### VERIFICATION DE LA PRESENCE DES PACKAGES ET INSTALLE CEUX QUI NE SONT PAS PRESENT ###
   myPackages = c("caret", "skimr", "RANN" , "randomForest",
                   "gbm", "xgboost" , "caretEnsemble" ,
-                  "C50" , "earth", "openxlsx", "skimr", "ROCR",
-                  "shinydashboard", "shiny","neuralnet","amap", "DT", "tidyverse")
+                  "C50" , "earth", "readxl", "skimr", "ROCR",
+                  "shinydashboard", "shiny","amap","DT","tidyverse")
 
   installPackage = installed.packages()[,1]
   toInstall = myPackages[!myPackages %in% installPackage]

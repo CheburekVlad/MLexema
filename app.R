@@ -23,8 +23,8 @@ ui <- dashboardPage(
       
       menuItem("Entraînement", icon = icon("gear"), startExpanded = TRUE,
         menuSubItem("Algorithme", tabName = "algoTab"),
-        menuSubItem("Résultats",  tabName = 'resultTab')
-      ),
+        menuSubItem("Résultats",  tabName = 'resultTab')),
+      
       menuItem("Prédiction", icon = icon("check"), tabName = 'predictionTab')
     )
   ),
@@ -64,4 +64,4 @@ server <- function(input, output, session) {
 
 
 
-shinyApp(ui = ui, server = server)
+shinyApp(ui, server)
