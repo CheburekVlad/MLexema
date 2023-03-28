@@ -1,4 +1,5 @@
 fileBackend = function(input, output, session) {
+  
   # Récupère les noms de fichiers des modèles entrainés
   listModels = as.list(list.files("trainedModel"))
 
@@ -13,10 +14,10 @@ fileBackend = function(input, output, session) {
 
   # Evènement sélectionnant le fichier d'entrée
   observeEvent(
-    eventExpr = input$fileInput,
+    eventExpr = input$FileInputButton,
     handlerExpr = {
       # Obtention du chemin du fichier d'entrée
-      inFile = input$fileInput$datapath
+      inFile <<- input$FileInputButton$datapath
       if (is.null(inFile))
         return(NULL)
 
@@ -41,6 +42,10 @@ fileBackend = function(input, output, session) {
       observeEvent(
         eventExpr = input$submit,
         handlerExpr = {
+          raw_data <<-readxl::read_xlsx(inFile)
+          result <- creationDataset(inFile, input$varOfInterest, input$numPartition)
+          output$result <<- renderPrint(result)
+          
           updateTabItems(session, "tabs", "algoTab")
         })
     })
