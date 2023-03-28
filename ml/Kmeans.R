@@ -1,7 +1,7 @@
-kmeans_analysis = function(input_data,clusters=2,nstart = 5,max.iter= 15){
+kmeans_analysis = function(input_data,clusters=2,nstart = 5,max.iter= 15,voiName){
   #data preprocessing
   data = input_data
-  diag = data$Diagnosis
+  diag = data[,voiName]
   diag_bin = ifelse(diag == "ACD",1,2) 
   normalized_data <- apply(data[,c(-14, -1)], 2, function(x) (x - min(x)) / (max(x) - min(x)))
   
@@ -16,13 +16,6 @@ kmeans_analysis = function(input_data,clusters=2,nstart = 5,max.iter= 15){
   
   conf = data.frame(data$Patients,fitted,diag_bin,diag)
   colnames(conf) = c("Patient","Predicted","Initial","Diagnosis")
-  roc = ROCR::performance(ROCR::prediction(conf$Predicted,conf$Diagnosis),"tpr","fpr")
+  roc = ROCR::performance(ROCR::prediction(conf$Predicted,conf[,voiName]),"tpr","fpr")
   return(list(conf= conf,roc = roc,acc = acc))
 }
-
-plot_placeholder <- function() {
-  ggplot() + 
-    theme_void() +
-    annotate("text", x = 0.5, y = 0.5, label = "Cette figure n'est pas disponible pour Kmeans", size = 8, hjust = 0.5, vjust = 0.5, color = "red")
-}
-

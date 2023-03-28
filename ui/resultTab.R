@@ -1,12 +1,15 @@
 resultsLayout = fluidRow(
   textOutput("mlResult"),
   
-  strong("1) Mesure de la pertinence du modèle"),
-  plotOutput("mlPlot"),
-  # plotOutput("ml2Plot"),
-  # br(),br(),
-  
-  strong("2) Prédiction du modele"),
+  div(id = "mlPlotDiv", 
+    useShinyjs(),
+    strong("Mesure de la pertinence du modèle"),
+    plotOutput("mlPlot"),
+    # plotOutput("ml2Plot"),
+    br(),br()
+  ),
+
+  strong("Prédiction du modele"),
   br(),br(),
   strong("Prédiction"),
   br(),br(),

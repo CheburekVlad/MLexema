@@ -1,6 +1,12 @@
-# Pré-charge les fonctions d'analyse random forest
-source(file.path('ml', 'random_forest.R'))
+# Pré-charge les fonctions d'analyse
+source(file.path('ml','algoCaret.R'))
 source(file.path('ml','Kmeans.R'))
+# Pré-charge les fonctions de preprocessing
+source(file.path('preprocessing','compute_mean_columns.R'))
+source(file.path('preprocessing','fold_change.R'))
+source(file.path('preprocessing','normalized_by_efficiency.R'))
+source(file.path('preprocessing','normalized_by_ref_gene.R'))
+# Recherche les modèles pré entraînés
 listModels = as.list(list.files("trainedModel"))
 
 verif=function(){
@@ -15,7 +21,7 @@ verif=function(){
   myPackages = c("caret", "skimr", "RANN" , "randomForest",
                   "gbm", "xgboost" , "caretEnsemble" ,
                   "C50" , "earth", "readxl", "skimr", "ROCR",
-                  "shinydashboard", "shiny","amap","DT","tidyverse")
+                  "shinydashboard", "shiny","amap","DT","tidyverse", "shinyjs")
 
   installPackage = installed.packages()[,1]
   toInstall = myPackages[!myPackages %in% installPackage]
@@ -34,6 +40,7 @@ verif=function(){
   library(amap)
   library(DT)
   library(tidyverse)
+  library(shinyjs)
 }
 
 verif()

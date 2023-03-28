@@ -1,5 +1,5 @@
 {preproLayout = fluidRow(
-  titlePanel("App de Normalisation des données"),
+  titlePanel("Normalisation des données"),
   
   sidebarLayout(
     sidebarPanel(
