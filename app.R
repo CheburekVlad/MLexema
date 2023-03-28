@@ -16,12 +16,15 @@ ui <- dashboardPage(
   dashboardSidebar(
     sidebarMenu(
       id = "tabs",
-      menuItem("Fichiers",  icon = icon("folder"), tabName = "fileTab"),
-
+      menuItem("Fichiers",  icon = icon("folder"), startExpanded = TRUE,
+        menuSubItem("Normalisation données brutes", tabName = "preproTab"),
+        menuSubItem("Chargement données", tabName = "fileTab")
+      ),
+      
       menuItem("Entraînement", icon = icon("gear"), startExpanded = TRUE,
         menuSubItem("Algorithme", tabName = "algoTab"),
-        menuSubItem("Résultats",  tabName = 'resultTab')
-      ),
+        menuSubItem("Résultats",  tabName = 'resultTab')),
+      
       menuItem("Prédiction", icon = icon("check"), tabName = 'predictionTab')
     )
   ),
@@ -31,6 +34,7 @@ ui <- dashboardPage(
       style='padding:2em;',
       tabItems(
         tabItem(tabName = "fileTab",   fileLayout),
+        tabItem(tabName = "preproTab", preproLayout),
         tabItem(tabName = "algoTab",   algoLayout),
         tabItem(tabName = "resultTab", resultsLayout),
         tabItem(tabName = "predictionTab", predictionLayout)
@@ -55,8 +59,9 @@ server <- function(input, output, session) {
   algoBackend(input, output, session)
   resultBackend(input, output, session)
   predictionBackend(input, output, session)
+  preproBackend(input, output)
 }
 
 
 
-shinyApp(ui = ui, server = server)
+shinyApp(ui, server)

@@ -1,6 +1,6 @@
 normalize_by_efficiency <- function(df, eff, liste_gene) {
   
-  # Prends un dataframe avec les données d'expression et d'efficacités pour normaliser
+  # Compute the normalized expression values
   j <-1
   for (i in liste_gene[1]:ncol(df)) {
     col <- df[[i]]
@@ -9,6 +9,6 @@ normalize_by_efficiency <- function(df, eff, liste_gene) {
     df[[colname]] <- norm_col
     j <- j +1
   }
-  # Retourne les tableau de résultat
+  # Return the updated data frame with normalized expression values
   return(df)
 }

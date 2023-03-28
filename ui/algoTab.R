@@ -1,33 +1,49 @@
 { algoLayout = fluidRow(
-  #strong("1) Estimation des meilleures variables pour la construction du modèle"),
-  #br(),br(), br(),
-  #numericInput("repetitionK", "Nombre de répétition pour l'analyse des variables importantes", value = 5, min = 0, max = 10),
-  #numericInput("columnJ", "Numéro de la dernière colonne prise en compte", value = 13 , min = 1, max = 100),
-  #numericInput("Voib", "Nombre de variables importantes minimum que l'on souhaite en sortie", value = 3, min = 0, max = 10),
+  
+  strong("1) Choix du modele"),
+  
+  br(),
+  br(),
+  
+  tabsetPanel(
+    #Random forest
+    tabPanel("Random Forest", value = "rf",hidden = T,style = "margin-left: 20px",
+        fluidRow(
+          br(),
+          br(),
+          actionButton("trainrf", "Entraînement",style = "margin-left: 20px"),
+          actionButton("metricrf","Analyse du modèle")
+        )
+    ),
 
-  #actionButton("verification", "Analyse"),
-  #verbatimTextOutput("print"),
-  #br(),
-  #strong("Variables d'intérêt identifiées : "),
-  #textOutput("mlVoiResult"),
-  #verbatimTextOutput("verb"),
- # br(), br(),
+    #SVM
+    tabPanel("SVM", value = "svm", hidden = T,
+        fluidRow(
+          br(),
+          br(),
+          actionButton("trainsvm", "Entraînement",style = "margin-left: 20px"),
+          actionButton("metricsvm","Analyse du modèle")
+        )
+    ),
+    
+    #Kmeans
+    tabPanel("Kmeans", value = "km",hidden = T,
+        fluidRow(
+          br(),
+          numericInput("clusters",".      Nombre de clusters:",value = 2,min = 2,step = 1),
+          numericInput("nstart",".      Nombre d'essais aleatoires:",value = 5, min =3, max = 10,step = 1),
+          numericInput("iter",".      Nombre d'iterations max:",value = 15, min = 5, step = 5),
+          actionButton("kmeans", "Clustering")
+        ),
+    ),
 
-  strong("1) Entrainement des modèles"),
-
-  selectInput("typeOfMl", h3("Choix du type de modèle"),
-              c("Random forest" = "rf",
-                "Support vector machine" = "svm",
-                "K-means" = "kmeans",
-                "Neural Network" = "neuralnet"
-                )),
-  strong("Choisir les parmaètres pour le kmeans"),
-  numericInput("cluster","Nombre de cluster",value=2),
-  numericInput("nstart","Choisir une nstart",value=5),
-  numericInput("maxhit","Choisir un maxhit",value=10),
-
-
-   actionButton("train", "Entraînement"),
-   actionButton("metric","Analyse des modèles"),
+    # 
+    # #NeuralNet
+    # tabPanel("Reseau de neurones", value = "nn", hidden = T,
+    #   conditionalPanel(condition = "input$type =='nn'",
+    #     fluidRow(actionButton("nn.result","Result"))
+    #   )
+    # )
   )
-}
+  
+)}

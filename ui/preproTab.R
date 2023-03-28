@@ -1,5 +1,5 @@
 {preproLayout = fluidRow(
-  titlePanel("App de Normalisation des données"),
+  titlePanel("Normalisation des données"),
   
   sidebarLayout(
     sidebarPanel(
@@ -17,21 +17,22 @@
       actionButton("compute", "Normalisation des données"),
       
       
-      downloadButton("downloadData", "Download normalized data in CSV Format")
+      downloadButton("downloadData", "Enregistre les données normalisée en format CSV"),
+      downloadButton("downloadExcel", "Enregistre les données normalisée en format xlsx")
     ),
     
     mainPanel(
       tabsetPanel(
         tabPanel("Données", dataTableOutput("table1")),
-        tabPanel("Efficacités", dataTableOutput("table2")),
-        tabPanel("Données Normalisés", tableOutput("table3")),
-        tabPanel("Fusion des données",
-                 fileInput("file3", "Select dataset file 1", accept = c(".csv")),
-                 fileInput("file4", "Select dataset file 2", accept = c(".csv")),
-                 actionButton("fusion_gene", "Fusion de deux jeux de données par gènes"),
-                 actionButton("fusion_patients", "Fusion de deux jeux de données par patients"))
+        tabPanel("Efficacité", dataTableOutput("table2")),
+        tabPanel("Données normalisée", tableOutput("table3")),
+        tabPanel("Fusion",
+                 fileInput("file3", "Selection jeux de données 1", accept = c(".csv")),
+                 fileInput("file4", "Selection jeux de données 2", accept = c(".csv")),
+                 actionButton("fusion_gene", "Fusion par gène"),
+                 actionButton("fusion_patients", "Fusion par patient"))
       )
     )
   )
-)}
-
+)
+}

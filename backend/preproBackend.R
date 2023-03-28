@@ -67,20 +67,64 @@ preproBackend <- function(input, output) {
     efficiency_df <- normalize_by_efficiency(mean_df, eff, liste_gene)
     efficiency_df$mean_GAPDH_actine <- (efficiency_df$GAPDH + efficiency_df$Actine)/2
     normalized_df <- normalized_by_ref_gene(efficiency_df, liste_info, liste_gene)
-    result_dt <- sample_ratio(normalized_df, liste_info)
+    fold_change <- sample_ratio(normalized_df, liste_info)
     
-    # Affichage du tableau de resultat
-    output$table3 <- renderTable(result_dt)
+    # Display the result dataframe
+    output$table3 <- renderTable(fold_change)
+    
+     # enregistrement sous .csv
+    output$downloadData <- downloadHandler(
+      filename = function() {
+        paste("data_Normalized-", Sys.Date(), ".csv", sep="_")
+      },
+      content = function(file) {
+        write.csv(fold_change, file, rowNames = FALSE)
+      }
+    )
+    
+    output$downloadExcel <- downloadHandler(
+      filename = function() {
+        paste("expression_normalise", Sys.Date(), ".xlsx", sep="_")
+      },
+      content = function(file){
+        write.xlsx(fold_change, file, rowNames = FALSE)
+      })
   })
   
+ ######################################### Loading and display ###################################################
+
+# Chargement des fichiers pour fusion
+data1 <- reactive({
+  req(input$file3)
+  df <- read.csv(input$file3$datapath, header = TRUE)
+  df
+})
+
+# chargement du deuxième fichier pour fusion
+data2 <- reactive({
+  req(input$file4)
+  eff <- read.csv(input$file4$datapath, header = TRUE)
+  eff
+})
+
+# Fusion et affichage des deux set de données par lignes 
+combined_data <- eventReactive(input$fusion_patients, {
+  rbind(data1(), data2())
   
-  # doesn't work 
-  output$downloadData <- downloadHandler(
-    filename = function() {
-      paste("data_Normalized-", Sys.Date(), ".csv", sep="")
-    },
-    content = function(file) {
-      write.csv(reactive({normalized_df}), file)
-    }
-  )
+  output$fusion_output <- renderTable({
+    combined_data()
+  })
+})
+
+# Fusion et affichage des deux set de données par colonnes
+combined_data <- eventReactive(input$fusion_gene, {
+  
+  cbind(data1(), data2())
+  
+  output$fusion_output <- renderTable({
+    combined_data()
+  })
+})
+
+  
 }
