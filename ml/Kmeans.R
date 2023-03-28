@@ -23,6 +23,6 @@ kmeans_analysis = function(input_data,clusters=2,nstart = 5,max.iter= 15){
 plot_placeholder <- function() {
   ggplot() + 
     theme_void() +
-    annotate("text", x = 0.5, y = 0.5, label = "Ce type de figure n'est pas disponible pour Kmeans", size = 8, hjust = 0.5, vjust = 0.5, color = "red")
+    annotate("text", x = 0.5, y = 0.5, label = "Cette figure n'est pas disponible pour Kmeans", size = 8, hjust = 0.5, vjust = 0.5, color = "red")
 }
 
