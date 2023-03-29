@@ -21,7 +21,7 @@ verif=function(){
   myPackages = c("caret", "skimr", "RANN" , "randomForest",
                   "gbm", "xgboost" , "caretEnsemble" ,
                   "C50" , "earth", "readxl", "skimr", "ROCR",
-                  "shinydashboard", "shiny","amap","DT","tidyverse")
+                  "shinydashboard", "shiny","amap","DT","tidyverse","shinyjs")
 
   installPackage = installed.packages()[,1]
   toInstall = myPackages[!myPackages %in% installPackage]
