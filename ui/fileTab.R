@@ -13,7 +13,8 @@ fileLayout = fluidRow(
   fileInput("FileInputButton", label = "Fichier d'entrée", accept = c(".xlsx")),
 
   actionButton("submit", "Soumettre"),
-
+  
+  #Visualisation du fichier chargé
   uiOutput("previewPanel"),
 
   br(),br(),br()

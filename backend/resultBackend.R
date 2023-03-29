@@ -1,5 +1,9 @@
 resultBackend = function (input, output, session) {
-
+  # Le resultat de cette fonction est de retourner l'objet output$total.
+  # Son contenu depend du methode d'analyse choisi et ne retourne pas les memes resultats 
+  # en fonction du methode
+  
+  # Layout du Kmeans
   observeEvent(input$kmeans,{
 
     output$verb <- renderText(k_means$acc)
@@ -30,6 +34,7 @@ resultBackend = function (input, output, session) {
     )
   })
   
+  # Layout du RF et SVM
   observeEvent(ignoreInit = TRUE, c(
       input$metricrf,
       input$metricsvm
@@ -71,11 +76,15 @@ resultBackend = function (input, output, session) {
         verbatimTextOutput("verb"),
         
         strong("Courbe ROC"),
-        plotOutput('RocCurve')
+        plotOutput('RocCurve'),
+        
+        actionButton("save","Sauvgarder le model")
       ))
     }
   )
   
+  # Permet de sauvegarder le model generé pour l'analyse dans le futur, si l'utilisateur
+  # considere que le model est utilisable
   observeEvent(
     eventExpr = input$save,
     handlerExpr = {

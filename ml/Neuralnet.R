@@ -1,8 +1,12 @@
 library(neuralnet)
 library(boot)
 
+# Ce fichier est un template du a des essais d'integrer neuralnet dans l'application finale.
+# Au cas ou le jeu de données sera plus consequant, les informations peuvent etre utilisées
+# pour construire le model du reseau de neurones.
+
 #data loading and preproc
-df = readxl::read_xlsx("~/Desktop/Projet/20220412 jeu de données RF sans barx2.xlsx")
+df = readxl::read_xlsx("Data_path") # Data_path a remplacer par le vrai path
 data = df
 df$Diagnosis = ifelse(data$Diagnosis == "ACD",1,0)
 partition = 0.7

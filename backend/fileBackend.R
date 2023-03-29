@@ -30,8 +30,11 @@ fileBackend = function(input, output, session) {
           fluidPage(
             hr(style = "border-top: 1px solid #000000;"),
             br(),
+    
+            # Delection des variables explicatives
             selectInput("varOfInterest", "Choisir une variable d'intérêt", vars, selected=tail(vars,1)),
             br(),
+            # Selection de la variable d'interet
             checkboxGroupInput("genes","Choisissez les variables explicatives",choices = vars,inline = T, selected = vars[c(-1,-length(vars))]),
             strong("Extrait du fichier chargé:"),
             renderTable(xl)

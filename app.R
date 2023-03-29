@@ -3,13 +3,15 @@ source("initialize.R")
 
 # ---------------------------- Interface ----------------------------
 
-# Onglets
+# Front-end layouts
 source(file.path('ui', 'fileTab.R'))
 source(file.path('ui', 'algoTab.R'))
 source(file.path('ui', 'resultTab.R'))
 source(file.path('ui', 'predictionTab.R'))
 source(file.path('ui', 'preproTab.R'))
 
+
+# Organisation des onglets
 ui <- dashboardPage(
   dashboardHeader(title = "Molecular diagnosis"),
 
@@ -63,5 +65,5 @@ server <- function(input, output, session) {
 }
 
 
-
+# Lance l'application
 shinyApp(ui, server)

@@ -37,7 +37,7 @@
         ),
     ),
 
-    # 
+    # Au cas ou neuralnet sera implementé voici le template d'integration
     # #NeuralNet
     # tabPanel("Reseau de neurones", value = "nn", hidden = T,
     #   conditionalPanel(condition = "input$type =='nn'",

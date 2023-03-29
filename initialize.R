@@ -1,18 +1,20 @@
 # Pré-charge les fonctions d'analyse
 source(file.path('ml','algoCaret.R'))
 source(file.path('ml','Kmeans.R'))
+
 # Pré-charge les fonctions de preprocessing
 source(file.path('preprocessing','compute_mean_columns.R'))
 source(file.path('preprocessing','fold_change.R'))
 source(file.path('preprocessing','normalized_by_efficiency.R'))
 source(file.path('preprocessing','normalized_by_ref_gene.R'))
+
 # Recherche les modèles pré entraînés
 listModels = as.list(list.files("trainedModel"))
 
 verif=function(){
 
   #' Cette fonction ne prend pas d'entrée et ne renvoie aucune valeur.
-  #' Elle vérifie si le nom des packages contenu dans la liste my_packages
+  #' Elle vérifie si les noms des packages contenus dans la liste my_packages
   #' sont dans la liste des packages installés. Dans le cas contraire le nom
   #' du package est inséré dans la variable toInstall qui est transmise à la
   #' commande "install.packages()" qui vectorise sur la variable toInstall
