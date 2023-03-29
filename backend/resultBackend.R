@@ -1,5 +1,5 @@
 resultBackend = function (input, output, session) {
-  shinyjs::hide(id="mlPlotDiv")
+
   observeEvent(input$kmeans,{
 
     output$verb <- renderText(k_means$acc)
@@ -14,6 +14,20 @@ resultBackend = function (input, output, session) {
     colnames(outputTable) = c("Patients", paste(voiName,"(input)"), paste(voiName,"(predicted)"))
 
     output$predictTable <- renderTable(outputTable)
+    output$total <- renderUI(
+      fluidPage(
+        strong("Prédiction du Kmeans"),
+        br(),br(),
+        tableOutput("predictTable"),
+        
+        strong("Precision de clusturing"),
+        uiOutput("confMatrix"),
+        verbatimTextOutput("verb"),
+        
+        strong("Courbe ROC"),
+        plotOutput('RocCurve')
+      )
+    )
   })
   
   observeEvent(ignoreInit = TRUE, c(
@@ -21,7 +35,6 @@ resultBackend = function (input, output, session) {
       input$metricsvm
     ), {
       output$mlPlot <- renderPlot(plot(newModel, main=paste("Model Accuracies with", method)))
-      shinyjs::show(id="mlPlotDiv")
       #newVarImp <<- varImp(newModel)
       #output$ml2Plot <- renderPlot(plot(newVarImp, main=paste("Variable Importance with", input$typeOfMl)))
       
@@ -41,6 +54,25 @@ resultBackend = function (input, output, session) {
       predROC <- ROCR::prediction(as.numeric(pred), testData[voiName])
       perf <- ROCR::performance(predROC,"tpr", "fpr")
       output$RocCurve = renderPlot(plot(perf))
+      output$total <- renderUI(fluidPage(
+        strong("Mesure de la pertinence du modèle"),
+        br(),
+        strong("Genes chioisi:",renderText(paste(input$genes,collapse = " + "))),
+        plotOutput("mlPlot"),
+        
+        strong("Prédiction du modele"),
+        br(),br(),
+        strong("Prédiction"),
+        br(),br(),
+        tableOutput("predictTable"),
+        
+        strong("Matrice de confusion"),
+        uiOutput("confMatrix"),
+        verbatimTextOutput("verb"),
+        
+        strong("Courbe ROC"),
+        plotOutput('RocCurve')
+      ))
     }
   )
   

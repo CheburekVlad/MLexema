@@ -131,7 +131,7 @@ RfeMethod=function(k,j,b,VoI){
 
 
 
-trainModel = function(responseVar, methode){
+trainModel = function(responseVar, methode,genes){
   #'
   #' Cette fonction prend en entrée la methode de création du modèle et entraine le modèle selon cette
   #' méthode. En sortie on a le modèle entrainé.
@@ -142,7 +142,7 @@ trainModel = function(responseVar, methode){
 
   ctrl <- trainControl(method = "cv", number=10)
 
-  formula <- as.formula(paste(responseVar,"~", paste(colnames(dataset[,2:13]), collapse = "*")))
+  formula <- as.formula(paste(responseVar,"~", paste(genes, collapse = "*")))
 
   print(formula)
   if(methode == 'rf') {

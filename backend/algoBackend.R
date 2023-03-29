@@ -5,7 +5,7 @@ algoBackend = function (input, output, session) {
       method <<- 'rf'
       withProgress(
         message = "Entraînement en cours...", value = 1, {
-          model <<- trainModel(input$varOfInterest,'rf')
+          model <<- trainModel(input$varOfInterest,'rf',input$genes)
         }
       )
     }
@@ -15,7 +15,7 @@ algoBackend = function (input, output, session) {
     method <<- 'svm'
       withProgress(
         message = "Entraînement en cours...", value = 1, {
-          model <<- trainModel(input$varOfInterest,'svm')
+          model <<- trainModel(input$varOfInterest,'svm',input$genes)
         }
       )
     }
@@ -23,7 +23,7 @@ algoBackend = function (input, output, session) {
   
   observeEvent(input$kmeans,{
     method <<- 'km'
-    k_means <<-kmeans_analysis(raw_data,input$clusters,input$nstart,input$iter, input$varOfInterest)
+    k_means <<-kmeans_analysis(raw_data,input$clusters,input$nstart,input$iter, input$varOfInterest,input$genes)
     updateTabItems(session,"tabs","resultTab")
   })
   

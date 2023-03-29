@@ -32,6 +32,7 @@ fileBackend = function(input, output, session) {
             br(),
             selectInput("varOfInterest", "Choisir une variable d'intérêt", vars, selected=tail(vars,1)),
             br(),
+            checkboxGroupInput("genes","Choisissez les variables explicatives",choices = vars,inline = T, selected = vars[c(-1,-length(vars))]),
             strong("Extrait du fichier chargé:"),
             renderTable(xl)
           )
