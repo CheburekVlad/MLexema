@@ -2,7 +2,7 @@ resultsLayout = fluidRow(
   textOutput("mlResult"),
   
   div(id = "mlPlotDiv", 
-    useShinyjs(),
+
     strong("Mesure de la pertinence du modèle"),
     plotOutput("mlPlot"),
     # plotOutput("ml2Plot"),
