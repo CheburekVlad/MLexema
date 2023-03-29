@@ -62,7 +62,7 @@ resultBackend = function (input, output, session) {
       output$total <- renderUI(fluidPage(
         strong("Mesure de la pertinence du modèle"),
         br(),
-        strong("Genes chioisi:",renderText(paste(input$genes,collapse = " + "))),
+        strong("Genes chioisis:",renderText(paste(input$genes,collapse = " + "))),
         plotOutput("mlPlot"),
         
         strong("Prédiction du modele"),
@@ -78,6 +78,7 @@ resultBackend = function (input, output, session) {
         strong("Courbe ROC"),
         plotOutput('RocCurve'),
         
+        textInput('name', 'Nom du fichier:'),
         actionButton("save","Sauvgarder le model")
       ))
     }
