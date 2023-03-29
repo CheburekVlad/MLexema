@@ -1,6 +1,7 @@
 resultBackend = function (input, output, session) {
+  shinyjs::hide(id="mlPlotDiv")
   observeEvent(input$kmeans,{
-    shinyjs::hide(id="mlPlotDiv")
+
     output$verb <- renderText(k_means$acc)
     output$RocCurve <- renderPlot(plot(k_means$roc))
 
