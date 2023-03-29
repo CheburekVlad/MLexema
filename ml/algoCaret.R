@@ -17,31 +17,17 @@ creationDataset = function(fileName, VoIname, partition){
 
   VoIcol = dataset[VoIname]
   colnames(VoIcol) = "transformedVoi"
-  # print(VoIcol)
-
+  
   VoI = unlist(unname(as.vector(unique(VoIcol))))
-  # print(VoI)
-
+ 
   dataset$transformedVoi = sapply(VoIcol, function(x) ifelse(x == VoI[1], 1, 0))
-  # print(head(dataset))
+                                  
     # Création du jeu d'entrainement et du jeu de test
   trainRowNumber <- createDataPartition(y = dataset$transformedVoi, p = partition, list = FALSE)
   trainData <<- dataset[trainRowNumber,]
   testData <<- dataset[-trainRowNumber,]
 
-  #preProcValues <- preProcess(trainData[,2:13], method = c("center", "scale"))
-  #preProcValues
-  #train
-
-  #train[,2:13] <- predict(preProcValues, train[,2:13])
-  #test[,2:13] <- predict(preProcValues, test[,2:13])
-  #train
-
-  #x <<- trainData[, 2:13]
-  #y <<- trainData$Diagnosis
 }
-
-#creationDataset("../dataset_RF_sans_barx2.xlsx", "Diagnosis", 0.7)
 
 RfeMethod=function(k,j,b,VoI){
   #'
@@ -86,51 +72,6 @@ RfeMethod=function(k,j,b,VoI){
   # Récupère les noms des variables de lmprofile et l'insérer lors de la création du modèle ?
 }
 
-#print(RfeMethod(5,13,5,trainData$transformedVoi))
-
-
-
-
-
-# trainModelSVM = function(responseVar, method){
-#   set.seed(123)
-#   # Le paramètre tuneLength indique à l'algorithme d'essayer différentes valeurs par défaut pour le paramètre principal
-#   # Ici, on utilise 10 valeurs par défaut
-#   # La précision (metric = "Accuracy") a été utilisée pour sélectionner le modèle optimal en utilisant la plus grande valeur retournée parmi les 10 valeurs.
-#   svmModel <- train(formula, data=trainData, method=methode, trControl=trainControl(method = "cv"),
-#                      tuneLength = 10, metric = "Accuracy",
-#                      tuneGrid = data.frame(C = 10^seq(-2, 2, by = 0.5),
-#                                            gamma = 10^seq(-2, 2, by = 0.5)))
-# }
-
-
-# set.seed(123)
-# Le paramètre tuneLength indique à l'algorithme d'essayer différentes valeurs par défaut pour le paramètre principal
-# Ici, on utilise 10 valeurs par défaut
-# La précision (metric = "Accuracy") a été utilisée pour sélectionner le modèle optimal en utilisant la plus grande valeur retournée parmi les 10 valeurs.
-# Le paramètre tuneGrid nous permet de décider quelles valeurs prendra pour le paramètre principal
-# Alors que tuneLength ne limite que le nombre de paramètres par défaut à utiliser.
-
-# Accuracy est le pourcentage d'instances correctement classées parmi toutes les instances.
-# Il est plus utile sur une classification binaire que sur les problèmes de classification multi-classes,
-# car il peut être moins clair de comprendre comment la précision se répartit entre ces classes
-# (par exemple, vous devez approfondir avec une matrice de confusion).
-#
-# Le Kappa est comme la classification avec Accuracy,
-# sauf qu'il est normalisé à la base du hasard aléatoire sur votre ensemble de données.
-# C'est une mesure plus utile à utiliser sur les problèmes qui présentent un déséquilibre dans les classes
-# (par exemple, une répartition 70-30 pour les classes 0 et 1 et vous pouvez obtenir une précision de 70 % en prédisant que toutes les instances sont pour la classe 0).
-#
-# trainData$Diagnosis = make.names(c("ACD", "ACD", "no ACD", "no.ACD"), unique = FALSE)
-# train(Diagnosis~GPR183*IGFL3, data=trainData, method="svmRadial", trControl=trainControl(method = "cv", classProbs = TRUE, summaryFunction=twoClassSummary),
-#                   tuneLength = 15, metric = "ROC")
-#
-# train(Diagnosis~GPR183*IGFL3, data=trainData, method="nnet", trControl=trainControl(method = "cv"),tuneGrid=expand.grid(size=c(10), decay=c(0.1)))
-# #
-
-
-
-
 trainModel = function(responseVar, methode,genes){
   #'
   #' Cette fonction prend en entrée la methode de création du modèle et entraine le modèle selon cette
@@ -157,11 +98,8 @@ trainModel = function(responseVar, methode,genes){
     )
   }
 
-
-  #fitted = predict(model, trainData)
-  print("ok")
+  print("Entraînement terminé")
   return(newModel)
 }
 
-#m = trainModel("Diagnosis", "svm")
 
