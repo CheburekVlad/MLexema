@@ -93,7 +93,6 @@ preproBackend <- function(input, output) {
   
  ######################################### Loading and display ###################################################
 
-# Chargement des fichiers pour fusion
 data1 <- reactive({
   req(input$file3)
   df <- read.csv(input$file3$datapath, header = TRUE)
@@ -109,22 +108,40 @@ data2 <- reactive({
 
 # Fusion et affichage des deux set de données par lignes 
 combined_data <- eventReactive(input$fusion_patients, {
-  rbind(data1(), data2())
-  
-  output$fusion_output <- renderTable({
-    combined_data()
-  })
-})
+  rbind(data1(), data2())})
+output$fusion_output <- renderTable({
+  combined_data()})
 
 # Fusion et affichage des deux set de données par colonnes
 combined_data <- eventReactive(input$fusion_gene, {
-  
-  cbind(data1(), data2())
-  
-  output$fusion_output <- renderTable({
-    combined_data()
-  })
+  data1_subset <- data1()[, !names(data1()) %in% c("PATIENTS", "DIAGNOSIS")]
+  data2_subset <- data2()[, !names(data2()) %in% c("PATIENTS", "DIAGNOSIS")]
+  data_subset <- cbind(data1_subset, data2_subset)
+  PATIENTS <- data1()[,"PATIENTS"]
+  DIAGNOSIS <-data1()[,"DIAGNOSIS"]
+  data_final <- cbind(PATIENTS, data_subset, DIAGNOSIS)
 })
 
-  
+output$fusion_output <- renderTable({
+  combined_data()
+})
+
+# enregistrement sous .csv
+output$downloadData <- downloadHandler(
+  filename = function() {
+    paste("datafusion", Sys.Date(), ".csv", sep="_")
+  },
+  content = function(file) {
+    write.csv(combined_data(), file, row.names = FALSE)
+  }
+)
+
+# enregistrement sous .excel
+output$downloadExcel <- downloadHandler(
+  filename = function() {
+    paste("datafusion", Sys.Date(), ".xlsx", sep="_")
+  },
+  content = function(file){
+    write.xlsx(combined_data(), file, row.names = FALSE)
+  })
 }
