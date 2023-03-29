@@ -21,11 +21,11 @@ L'implémentation de ces modèles se déroule à l'aide d'une application shiny.
 
 <img style="float: right;" src="./docs/tabboard.png">
 Une fois l'application lancée, dans le tabboard il existe plusieurs options.
--> Normalisation des données brutes permet d'effectuer le pré-traitement des données pour systematiser le format des fichiers d'entrée de sorte qu'ils puisse être utilisés. Permet également de normalisér les données d'expression et fusionner des datasets differents.
+--> Normalisation des données brutes permet d'effectuer le pré-traitement des données pour systematiser le format des fichiers d'entrée de sorte qu'ils puisse être utilisés. Permet également de normalisér les données d'expression et fusionner des datasets differents.
 
--> Chargement de données permet de soit charger un model de ML existant et analyser le dataset en le chargeant dans l'onglet Prediction, soit de charger un jeu de donner et choisir les variables explicative et la variable cible et de passer à l'etape d'analyse en cliquant sur le bouton soumettre. Dans le deuxieme cas une fois le jeu de données chargé ses 10 premieres lignes seront afficher pour verifier la bonne importation et faciliter le choix des variables.
+--> Chargement de données permet de soit charger un model de ML existant et analyser le dataset en le chargeant dans l'onglet Prediction, soit de charger un jeu de donner et choisir les variables explicative et la variable cible et de passer à l'etape d'analyse en cliquant sur le bouton soumettre. Dans le deuxieme cas une fois le jeu de données chargé ses 10 premieres lignes seront afficher pour verifier la bonne importation et faciliter le choix des variables.
 
--> Algorithme est l'onglet sur lequel on peut choisir le type d'analyse.
+--> Algorithme est l'onglet sur lequel on peut choisir le type d'analyse.
 
 ### RF et SVM
 SVM et RF implique l'entrainement d'un nouveau model (bouton Entrainement). La prediction de ce model peut être visualisé en cliquant sur le bouton Analyse du modèle. Ceci va automatiquement ouvrir l'onglet Resultats ou 4 objet peuvent etre consulter pour determiner les resultats d'analyse: Courbe de precision, Predictions du model vs données initiales, Matrice de confusion et la courbe ROC (Cf. graphic_interpretation.md).
